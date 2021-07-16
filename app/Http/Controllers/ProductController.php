@@ -53,13 +53,10 @@ class ProductController extends Controller
             $ext = Str::random(5).'-'.$slug.'.'.$image->getClientOriginalExtension();
             Image::make($image)->save(public_path('productImage/'.$ext), 72);
             $product->thumbnail = $ext;
-
         }
-        
         $product->save();
         return back()->with('success','Data Successfully Inserted.');
     }
-
     function deleteproduct($data){
         Product::findOrFail($data)->delete();
         return back()->with('success','Product Trashed Successfully');
@@ -74,5 +71,12 @@ class ProductController extends Controller
     function recoverproducts($id){
         Product::onlyTrashed()->findOrFail($id)->restore();
         return back()->with('success','Product Restored Successfully');
+    }
+
+    public function editproducts($id){
+        return view('backend.product.edit_products',[
+            'categories' => Category::orderBy('category_name','Asc')->get(),
+            'products'  => Product::find($id),
+        ]);
     }
 }

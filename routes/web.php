@@ -48,7 +48,7 @@ Route::post('post-products',[ProductController::class,'postproduct'])->name('pos
 Route::get('delete-products/{pdt}',[ProductController::class,'deleteproduct'])->name('deleteproduct');
 Route::get('trashed-products',[ProductController::class,'trashedproducts'])->name('trashedproducts');
 Route::get('recover-product/{pdt}',[ProductController::class,'recoverproducts'])->name('recoverproducts');
-
+Route::get('edit-products/{pdt}',[ProductController::class,'editproducts'])->name('editproducts');
 
 
 
