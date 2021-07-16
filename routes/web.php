@@ -42,7 +42,12 @@ Route::get('trashed-subcategory',[SubCategoryController::class,'trashedsubcatego
 
 // Product
 Route::get('products',[ProductController::class,'products'])->name('products');
-
+Route::get('add-product',[ProductController::class,'addproducts'])->name('addproducts');
+Route::get('api/get-subcat-list/{cat_id}',[ProductController::class,'getsubcat'])->name('getsubcat');
+Route::post('post-products',[ProductController::class,'postproduct'])->name('postproduct');
+Route::get('delete-products/{pdt}',[ProductController::class,'deleteproduct'])->name('deleteproduct');
+Route::get('trashed-products',[ProductController::class,'trashedproducts'])->name('trashedproducts');
+Route::get('recover-product/{pdt}',[ProductController::class,'recoverproducts'])->name('recoverproducts');
 
 
 

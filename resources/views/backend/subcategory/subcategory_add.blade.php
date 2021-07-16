@@ -68,8 +68,8 @@
                         @endforeach
                     </select>
                     @error('category_id')
-                    <div class=''>{{$message}}<span class="text-danger">*</span></div>
-                @enderror
+                        <div class=''>{{$message}}<span class="text-danger">*</span></div>
+                    @enderror
                   </div>
                 <!-- /.card-body -->
               {{--                   

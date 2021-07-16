@@ -25,7 +25,6 @@ class SubCategoryController extends Controller
             'slug' => ['required','unique:sub_categories'],
             'category_id' => ['required','min:1'],
         ]);
-
         $scat = new SubCategory;
         $scat->subcategory_name = $request->subcategory_name;
         $scat->slug = Str::slug($request->slug);
@@ -39,7 +38,7 @@ class SubCategoryController extends Controller
         foreach($request->delete as $delete){
             SubCategory::findOrFail($delete)->delete();
         }
-    return back()->with('success','Data Delete Successfully.');
+        return back()->with('success','Data Delete Successfully.');
     }
     
     function trashedsubcategory(){

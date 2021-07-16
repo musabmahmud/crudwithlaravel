@@ -20,6 +20,8 @@ class CreateProductsTable extends Migration
             $table->string('thumbnail');
             $table->foreignId('category_id');
             $table->foreignId('subcategory_id');
+            $table->text('summary');
+            $table->longText('description');
             $table->timestamps();
             $table->softDeletes();
         });
