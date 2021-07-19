@@ -12,4 +12,7 @@ class SubCategory extends Model
     function category(){
         return $this->belongsTo(Category::class);
     }
+    function product(){
+        return $this->hasOne(Category::class);
+    }
 }

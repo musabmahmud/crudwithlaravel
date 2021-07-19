@@ -32,7 +32,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('all-subcategory-delete') }}" method="POST">
+                <form action="{{ url('all-products-delete') }}" method="POST">
                 @csrf
                 <table class="table table-bordered table-responsive-sm">
                   <thead>
@@ -64,7 +64,7 @@
                               <td>{{ $pdt->description}}</td>
                               <td>{{ $pdt->created_at->format('d-M-Y h:i:s a')}} ({{$pdt->created_at->diffForHumans()}})</td>
                               <td><a href="{{ url('recover-product').'/'.$pdt->id }}" class="btn btn-warning">Recover</a>
-                                <a href="" class="btn btn-danger">Trashed</a></td>
+                                <a href="" class="btn btn-danger">Delete Forever</a></td>
                           </tr>
                       @endforeach
                     <tr>

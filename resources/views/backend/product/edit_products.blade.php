@@ -39,11 +39,12 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="{{ url('post-products') }}" enctype="multipart/form-data" method="POST">
+                            <form action="{{ url('update-product')}}" enctype="multipart/form-data" method="POST">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="title">Product Name</label>
+                                        <input type="hidden" name="product_id" value="{{ $products->id }}">
                                         <input type="text" class="form-control @error('title') is invalid @enderror"
                                             id="title" name="title" value="{{ $products->title }}"
                                             placeholder="Enter Your Product Title">
@@ -66,9 +67,9 @@
                                         <select name="category_id" class="form-control" id="category_id">
                                             <option value="{{ $products->category_id}}" selected>Choose Category</option>
                                             @foreach ($categories as $category)
-                                                <option @if ($products->category_id == $cat->id) 
+                                                <option @if ($products->category_id == $category->id) 
                                                     selected
-                                                @endif value="{{ $category->category_id }}">{{ $category->category_name }}
+                                                @endif value="{{ $category->id }}">{{ $category->category_name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -80,19 +81,33 @@
                                     <div class="form-group">
                                         <label for="subcategory_id">Sub Category</label>
                                         <select name="subcategory_id" class="form-control" id="subcategory_id">
+                                            @foreach ($scat as $scats)
+                                                <option @if ($products->subcategory_id == $scats->id) 
+                                                    selected
+                                                @endif value="{{ $scats->id }}">{{ $scats->subcategory_name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         @error('subcategory_id')
                                             <div class=''>{{ $message }}<span class="text-danger">*</span></div>
                                         @enderror
                                     </div>
-
-                                    <div class="form-group">
-                                        <label for="thumbnail">Thumbnail</label>
-                                        <input type="file" class="form-control @error('thumbnail') is invalid @enderror"
-                                            id="thumbnail" value="{{ $products->thumbnail }}"name="thumbnail">
-                                        @error('thumbnail')
-                                            <div class=''>{{ $message }}<span class="text-danger">*</span></div>
-                                        @enderror
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="thumbnail">Thumbnail</label>
+                                                <input type="file" class="form-control @error('thumbnail') is invalid @enderror" id="thumbnail" name="thumbnail" onchange="document.getElementById('image_id').src= window.URL.createObjectURL(this.files[0])">
+                                                @error('thumbnail')
+                                                    <div class=''>{{ $message }}<span class="text-danger">*</span></div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <img src="{{ asset('productImage/'.$products->thumbnail)}}" alt="{{ $products->title}}" height="200" id="image_id">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">

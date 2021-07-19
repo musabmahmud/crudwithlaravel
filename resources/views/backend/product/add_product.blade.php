@@ -92,8 +92,55 @@
                                             <div class=''>{{ $message }}<span class="text-danger">*</span></div>
                                         @enderror
                                     </div>
-
-                                    <div class="form-group">
+                                    <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div id="dynamic-field-1" class="form-group dynamic-field">
+                                                <label for="color">Color</label>
+                                                <input type="text" id="color" class="form-control" name="color[]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div id="dynamic-field-1" class="form-group dynamic-field">
+                                                <label for="size">Size</label>
+                                                <input type="text" id="size" class="form-control" name="size[]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div id="dynamic-field-1" class="form-group dynamic-field">
+                                                <label for="quantity">Quantity</label>
+                                                <input type="text" id="quantity" class="form-control" name="quantity[]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div id="dynamic-field-1" class="form-group dynamic-field">
+                                                <label for="price">Price</label>
+                                                <input type="number" min="0" id="price" class="form-control" name="price[]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <div id="dynamic-field-1" class="form-group dynamic-field">
+                                                <label for="saleprice">Sale Price</label>
+                                                <input type="number" min="0" id="saleprice" class="form-control" name="sale_price[]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="button" id="add-button" class="btn btn-secondary float-left text-uppercase shadow-sm"><i class="fas fa-plus fa-fw"></i> Add</button>
+                                        <button type="button" id="remove-button" class="btn btn-secondary float-left text-uppercase ml-1" disabled="disabled"><i class="fas fa-minus fa-fw"></i> Remove</button>
+                                   
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                         <label for="summary">Summary</label>
                                         <textarea type="text" class="form-control @error('summary') is invalid @enderror"
                                             id="summary" name="summary"
@@ -162,5 +209,73 @@
                 })
             }
         });
+
+        $(document).ready(function() {
+            var buttonAdd = $("#add-button");
+            var buttonRemove = $("#remove-button");
+            var className = ".dynamic-field";
+            var count = 0;
+            var field = "";
+            var maxFields = 5;
+
+            function totalFields() {
+                return $(className).length;
+            }
+
+            function addNewField() {
+                count = totalFields() + 1;
+                field = $("#dynamic-field-1").clone();
+                field.attr("id", "dynamic-field-" + count);
+                field.children("label").text("Field " + count);
+                field.find("input").val("");
+                $(className + ":last").after($(field));
+            }
+
+            function removeLastField() {
+                if (totalFields() > 1) {
+                $(className + ":last").remove();
+                }
+            }
+
+            function enableButtonRemove() {
+                if (totalFields() === 2) {
+                buttonRemove.removeAttr("disabled");
+                buttonRemove.addClass("shadow-sm");
+                }
+            }
+
+            function disableButtonRemove() {
+                if (totalFields() === 1) {
+                buttonRemove.attr("disabled", "disabled");
+                buttonRemove.removeClass("shadow-sm");
+                }
+            }
+
+            function disableButtonAdd() {
+                if (totalFields() === maxFields) {
+                buttonAdd.attr("disabled", "disabled");
+                buttonAdd.removeClass("shadow-sm");
+                }
+            }
+
+            function enableButtonAdd() {
+                if (totalFields() === (maxFields - 1)) {
+                buttonAdd.removeAttr("disabled");
+                buttonAdd.addClass("shadow-sm");
+                }
+            }
+
+            buttonAdd.click(function() {
+                addNewField();
+                enableButtonRemove();
+                disableButtonAdd();
+            });
+
+            buttonRemove.click(function() {
+                removeLastField();
+                disableButtonRemove();
+                enableButtonAdd();
+            });
+            });
     </script>
 @endsection

@@ -73,10 +73,47 @@ class ProductController extends Controller
         return back()->with('success','Product Restored Successfully');
     }
 
-    public function editproducts($id){
+    function allproductsdelete(Request $request){
+        $request->validate();
+        foreach($request->delete as $delete){
+            Product::findOrFail($delete)->delete();
+        }
+        return back()->with('success','All Data Delete Successfully.');
+    }
+
+    function editproducts($id){
+        $product = Product::Where('id',$id)->first();
         return view('backend.product.edit_products',[
             'categories' => Category::orderBy('category_name','Asc')->get(),
-            'products'  => Product::find($id),
+            'products'  => $product,
+            'scat' => SubCategory::Where('category_id', $product->category_id)->get(),
         ]);
+    }
+    function productupdate(Request $request){
+        $product = Product::findOrFail($request->product_id);
+        $product->title = $request->title;
+        $product->slug = Str::slug($request->slug);
+        $product->category_id = $request->category_id;
+        $product->subcategory_id = $request->subcategory_id;
+        $product->summary = $request->summary;
+        $product->description = $request->description;
+
+        $slug = Str::slug($request->slug);
+        
+        if($request->hasFile('thumbnail')){
+            $image = $request->file('thumbnail');
+
+            $old_image = public_path('productImage/'.$product->thumbnail);
+            if(file_exists($old_image)){
+                unlink($old_image);
+            }
+
+            $ext = Str::random(5).'-'.$slug.'.'.$image->getClientOriginalExtension();
+            Image::make($image)->save(public_path('productImage/'.$ext), 72);
+            $product->thumbnail = $ext;
+        }
+        $product->save();
+        
+        return redirect('products')->with('success','Product Updated Successfully');
     }
 }
