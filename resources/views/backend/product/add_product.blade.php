@@ -20,7 +20,6 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -87,60 +86,81 @@
                                     <div class="form-group">
                                         <label for="thumbnail">Thumbnail</label>
                                         <input type="file" class="form-control @error('thumbnail') is invalid @enderror"
-                                            id="thumbnail" value="{{ old('thumbnail') }}"name="thumbnail">
+                                            id="thumbnail" value="{{ old('thumbnail') }}" name="thumbnail">
                                         @error('thumbnail')
                                             <div class=''>{{ $message }}<span class="text-danger">*</span></div>
                                         @enderror
                                     </div>
-                                    <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <div id="dynamic-field-1" class="form-group dynamic-field">
-                                                <label for="color">Color</label>
-                                                <input type="text" id="color" class="form-control" name="color[]" />
+                                    <div class="form-group">
+                                        <div id="dynamic-field-1" class="form-group dynamic-field">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label for="color">Color</label>
+                                                    <select type="text" id="color" class="form-control" name="color_id[]">
+                                                        <option value="" selected>Choose Color</option>
+                                                        @foreach ($colors as $color)
+                                                            <option value="{{ $color->id }}">{{ $color->color_name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('color_id')
+                                                        <div class=''>{{ $message }}<span class="text-danger">*</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="size">Size</label>
+                                                    <select type="text" id="size" class="form-control" name="size_id[]">
+                                                        <option value="" selected>Choose Size</option>
+                                                        @foreach ($sizes as $size)
+                                                            <option value="{{ $size->id }}">{{ $size->size_name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('size_id')
+                                                        <div class=''>{{ $message }}<span class="text-danger">*</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="quantity">Quantity</label>
+                                                    <input type="number" min="0" id="quantity" class="form-control"
+                                                        name="quantity[]" />
+                                                    @error('quantity')
+                                                        <div class=''>{{ $message }}<span class="text-danger">*</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="price">Regular Price</label>
+                                                    <input type="number" min="0" id="price" name="regular_price[]" class="form-control"/>
+                                                    @error('regular_price')
+                                                        <div class=''>{{ $message }}<span class="text-danger">*</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="saleprice">Sale Price</label>
+                                                    <input type="number" min="0" id="saleprice" class="form-control" name="sale_price[]" />
+                                                    @error('sale_price')
+                                                        <div class=''>{{ $message }}<span class="text-danger">*</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button type="button" id="add-button"
+                                                    class="btn btn-secondary float-left text-uppercase shadow-sm"><i
+                                                        class="fas fa-plus fa-fw"></i> Add</button>
+                                                <button type="button" id="remove-button"
+                                                    class="btn btn-secondary float-left text-uppercase ml-1"
+                                                    disabled="disabled"><i class="fas fa-minus fa-fw"></i> Remove</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <div id="dynamic-field-1" class="form-group dynamic-field">
-                                                <label for="size">Size</label>
-                                                <input type="text" id="size" class="form-control" name="size[]" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <div id="dynamic-field-1" class="form-group dynamic-field">
-                                                <label for="quantity">Quantity</label>
-                                                <input type="text" id="quantity" class="form-control" name="quantity[]" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <div id="dynamic-field-1" class="form-group dynamic-field">
-                                                <label for="price">Price</label>
-                                                <input type="number" min="0" id="price" class="form-control" name="price[]" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <div id="dynamic-field-1" class="form-group dynamic-field">
-                                                <label for="saleprice">Sale Price</label>
-                                                <input type="number" min="0" id="saleprice" class="form-control" name="sale_price[]" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <button type="button" id="add-button" class="btn btn-secondary float-left text-uppercase shadow-sm"><i class="fas fa-plus fa-fw"></i> Add</button>
-                                        <button type="button" id="remove-button" class="btn btn-secondary float-left text-uppercase ml-1" disabled="disabled"><i class="fas fa-minus fa-fw"></i> Remove</button>
-                                   
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
+                                    <div class="form-group">
                                         <label for="summary">Summary</label>
                                         <textarea type="text" class="form-control @error('summary') is invalid @enderror"
                                             id="summary" name="summary"
@@ -197,12 +217,13 @@
                     success: function(res) {
                         if (res) {
                             $("#subcategory_id").empty();
-                            $('#subcategory_id').append('<option selected>Choose Sub Category</option>');
-                            $.each(res, function(key, value){
-                              $('#subcategory_id').append('<option value="'+value.id+'">'+value.subcategory_name+'</option>')
+                            $('#subcategory_id').append(
+                                '<option selected>Choose Sub Category</option>');
+                            $.each(res, function(key, value) {
+                                $('#subcategory_id').append('<option value="' + value.id +
+                                    '">' + value.subcategory_name + '</option>')
                             });
-                        }
-                        else{
+                        } else {
                             $("#subcategory_id").empty();
                         }
                     }
@@ -233,35 +254,35 @@
 
             function removeLastField() {
                 if (totalFields() > 1) {
-                $(className + ":last").remove();
+                    $(className + ":last").remove();
                 }
             }
 
             function enableButtonRemove() {
                 if (totalFields() === 2) {
-                buttonRemove.removeAttr("disabled");
-                buttonRemove.addClass("shadow-sm");
+                    buttonRemove.removeAttr("disabled");
+                    buttonRemove.addClass("shadow-sm");
                 }
             }
 
             function disableButtonRemove() {
                 if (totalFields() === 1) {
-                buttonRemove.attr("disabled", "disabled");
-                buttonRemove.removeClass("shadow-sm");
+                    buttonRemove.attr("disabled", "disabled");
+                    buttonRemove.removeClass("shadow-sm");
                 }
             }
 
             function disableButtonAdd() {
                 if (totalFields() === maxFields) {
-                buttonAdd.attr("disabled", "disabled");
-                buttonAdd.removeClass("shadow-sm");
+                    buttonAdd.attr("disabled", "disabled");
+                    buttonAdd.removeClass("shadow-sm");
                 }
             }
 
             function enableButtonAdd() {
                 if (totalFields() === (maxFields - 1)) {
-                buttonAdd.removeAttr("disabled");
-                buttonAdd.addClass("shadow-sm");
+                    buttonAdd.removeAttr("disabled");
+                    buttonAdd.addClass("shadow-sm");
                 }
             }
 
@@ -276,6 +297,6 @@
                 disableButtonRemove();
                 enableButtonAdd();
             });
-            });
+        });
     </script>
 @endsection

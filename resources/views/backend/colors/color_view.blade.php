@@ -1,7 +1,9 @@
 @extends('backend.master')
-@section('nav_open')
+@section('')
+menu-is-opening menu-open
 @endsection
-@section('cat_active');
+@section('');
+    active
 @endsection
 @section('content')
 <div class="content-wrapper" style="min-height: 1299.69px;">
@@ -10,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>View Products</h1>
+            <h1>View Color</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -32,41 +34,29 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('all-subcategory-delete') }}" method="POST">
+                <form action="{{ url('all-colors') }}" method="POST">
                 @csrf
-                <table class="table table-bordered table-responsive-sm">
+                <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th><input type="checkbox" id="checkAll"></th>
                       <th style="width: 10px">No</th>
-                      <th>title</th>
+                      <th>Sub Category</th>
                       <th>Slug</th>
-                      <th>Category</th>
-                      <th>Subcategory</th>
-                      <th>attribute</th>
-                      <th>Thumbnail</th>
-                      <th>Summary</th>
-                      <th>Description</th>
                       <th>Created Date</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                      @foreach ($products as $key => $pdt)
+                      @foreach ($colors as $key => $color)
                           <tr>
-                              <td><input type="checkbox" class="checkbox" name="delete[]" value="{{$pdt->id}}"></td>
-                              <td>{{$products->firstItem() + $key}}</td>
-                              <td>{{ $pdt->title}}</td>
-                              <td>{{ $pdt->slug}}</td>
-                              <td>{{ $pdt->category->category_name}}</td>
-                              <td>{{ $pdt->subcategory->subcategory_name}}</td>
-                              <td>{{ $pdt->attribute}}</td>
-                              <td><img src="productImage/{{ $pdt->thumbnail}}" alt="{{ $pdt->title}}" height="100"></td>
-                              <td>{{ $pdt->summary}}</td>
-                              <td>{{ $pdt->description}}</td>
-                              <td>{{ $pdt->created_at->format('d-M-Y h:i:s a')}} ({{$pdt->created_at->diffForHumans()}})</td>
-                              <td><a href="{{ url('edit-products').'/'.$pdt->id }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ url('delete-products').'/'.$pdt->id }}" class="btn btn-danger">Trashed</a></td>
+                              <td><input type="checkbox" class="checkbox" name="delete[]" value="{{$color->id}}"></td>
+                              <td>{{$colors->firstItem() + $key}}</td>
+                              <td>{{ $color->color_name}}</td>
+                              <td>{{ $color->slug}}</td>
+                              <td>{{ $color->created_at->format('d-M-Y h:i:s a')}} ({{$color->created_at->diffForHumans()}})</td>
+                              <td><a href="{{ url('edit-subcategory').'/'.$color->id }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ url('delete-subcategory').'/'.$color->id }}" class="btn btn-danger">Trashed</a></td>
                           </tr>
                       @endforeach
                     <tr>
@@ -78,7 +68,7 @@
                 </div>
               </div>
               <!-- /.card-body -->
-              {{ $products->links() }}
+              {{ $colors->links() }}
             </div>
             <!-- /.card -->
           </div>

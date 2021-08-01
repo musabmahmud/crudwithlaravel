@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
 use App\Models\Category;
+use App\Models\Size;
+use App\Models\Color;
+use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -20,6 +23,8 @@ class ProductController extends Controller
         // $cats = Category::OrderBy('category_name', 'Asc')->paginate(10);
         return view('backend.product.add_product',[
             'categories' => Category::orderBy('category_name','Asc')->get(),
+            'colors' => Color::orderBy('color_name','Asc')->get(),
+            'sizes' => Size::orderBy('size_name','Asc')->get(),
         ]);
     }
 
@@ -33,11 +38,27 @@ class ProductController extends Controller
             'title' => ['required','min:3'],
             'slug' => ['required'],
             'category_id' => ['required'],
+            'subcategory_id' => ['required'],
             'thumbnail' => ['required'],
+
+            'color_id' => ['required'],
+            'color_id.*' => ['required'],
+            
+            'size_id' => ['required'],
+            'size_id.*' => ['required'],
+
+            'quantity' => ['required'],
+            'quantity.*' => ['required'],
+
+            'regular_price' => ['required'],
+            'regular_price.*' => ['required'],
+
+            'sale_price' => ['required'],
+            'sale_price.*' => ['required'],
+            
             'summary' => ['required'],
             'description' => ['required'],
         ]);
-        
         $product = new Product();
         $product->title = $request->title;
         $product->slug = Str::slug($request->slug);
@@ -55,6 +76,17 @@ class ProductController extends Controller
             $product->thumbnail = $ext;
         }
         $product->save();
+
+        foreach ($request->color_id as $key => $color){
+            $attr = new Attribute;
+            $attr->product_id = $product->id;
+            $attr->color_id = $color;
+            $attr->size_id = $request->size_id[$key];
+            $attr->quantity = $request->quantity[$key];
+            $attr->regular_price = $request->regular_price[$key];
+            $attr->sale_price = $request->sale_price[$key];
+            $attr->save();
+        }
         return back()->with('success','Data Successfully Inserted.');
     }
     function deleteproduct($data){

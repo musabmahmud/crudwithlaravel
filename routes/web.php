@@ -4,6 +4,8 @@ use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProductController;
+use App\HTTP\Controllers\ColorController;
+use App\HTTP\Controllers\SizeController;
 // use App\Models\SubCategory;
 
 /*
@@ -52,5 +54,14 @@ Route::get('recover-product/{pdt}',[ProductController::class,'recoverproducts'])
 Route::get('edit-products/{pdt}',[ProductController::class,'editproducts'])->name('editproducts');
 Route::post('all-products-delete',[ProductController::class,'allproductsdelete'])->name('allproductsdelete');
 
+//color
+Route::get('add-color',[ColorController::class,'addcolor'])->name('addcolor');
+Route::get('view-color',[ColorController::class,'viewcolor'])->name('viewcolor');
+Route::post('post-color',[ColorController::class,'postcolor'])->name('postcolor');
+
+//Size
+Route::get('add-size',[SizeController::class,'addsize'])->name('addsize');
+Route::get('view-size',[SizeController::class,'viewsize'])->name('viewsize');
+Route::post('post-size',[SizeController::class,'postsize'])->name('postsize');
 
 require __DIR__.'/auth.php';
