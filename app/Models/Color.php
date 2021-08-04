@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Color extends Model
 {
     use HasFactory,SoftDeletes;
+    function product(){
+        return $this->hasMany(Product::class,'product_id');
+    }
 }

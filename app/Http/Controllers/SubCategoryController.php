@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\SubCategory;
 use App\Models\Category;
+use App\Models\Product;
 
 class SubCategoryController extends Controller
 {
     function subcategory(){
         return view('backend.subcategory.subcategory_view',[
-            'subcats' => SubCategory::paginate(10)
+            'subcats' => SubCategory::with('category')->paginate(10)
         ]);
     }
     function addsubcategory(){
@@ -33,12 +34,28 @@ class SubCategoryController extends Controller
         return back()->with('success','Data Successfully Inserted.');
     }
     
+    function deletesubcategory($sub_id){
+        $scat = Product::where('subcategory_id', $sub_id);
+        if($scat->count() == 0){
+            SubCategory::findOrFail($sub_id)->delete();
+            return back()->with('success','SubCategory Delete Successfully');
+        }
+        else{
+            return redirect('sub-category')->with('error','Sub Category has Products');
+        }
+    }
     function allsubcategorydelete(Request $request){
     
         foreach($request->delete as $delete){
-            SubCategory::findOrFail($delete)->delete();
+            $scat = Product::where('subcategory_id', $delete);
+            if($scat->count() == 0){
+                SubCategory::findOrFail($delete)->delete();
+                return back()->with('success','All SubCategory Delete Successfully');
+            }
+            else{
+                return redirect('sub-category')->with('error','Some Sub Category has Products');
+            }
         }
-        return back()->with('success','Data Delete Successfully.');
     }
     
     function trashedsubcategory(){

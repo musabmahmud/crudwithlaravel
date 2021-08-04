@@ -27,9 +27,16 @@ menu-is-opening menu-open
               <div class="card-header">
                 <h3 class="card-title">Bordered Table </h3>
                 @if (session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible fade show">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
                         {{ session('success') }}
                     </div>
+                @endif
+                @if (session('error'))
+                  <div class="alert alert-warning alert-dismissible fade show">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ session('error') }}
+                  </div>
                 @endif
               </div>
               <!-- /.card-header -->
@@ -49,16 +56,16 @@ menu-is-opening menu-open
                     </tr>
                   </thead>
                   <tbody>
-                      @foreach ($subcats as $key => $cat)
+                      @foreach ($subcats as $key => $scat)
                           <tr>
-                              <td><input type="checkbox" class="checkbox" name="delete[]" value="{{$cat->id}}"></td>
+                              <td><input type="checkbox" class="checkbox" name="delete[]" value="{{$scat->id}}"></td>
                               <td>{{$subcats->firstItem() + $key}}</td>
-                              <td>{{ $cat->subcategory_name}}</td>
-                              <td>{{ $cat->slug}}</td>
-                              <td>{{ $cat->category->category_name}}</td>
-                              <td>{{ $cat->created_at->format('d-M-Y h:i:s a')}} ({{$cat->created_at->diffForHumans()}})</td>
-                              <td><a href="{{ url('edit-subcategory').'/'.$cat->id }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ url('delete-subcategory').'/'.$cat->id }}" class="btn btn-danger">Trashed</a></td>
+                              <td>{{ $scat->subcategory_name}}</td>
+                              <td>{{ $scat->slug}}</td>
+                              <td>{{ $scat->category->category_name}}</td>
+                              <td>{{ $scat->created_at->format('d-M-Y h:i:s a')}} ({{$scat->created_at->diffForHumans()}})</td>
+                              <td><a href="{{ url('edit-subcategory').'/'.$scat->id }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ route('deletesubcategory',$scat->id) }}" class="btn btn-danger">Trashed</a></td>
                           </tr>
                       @endforeach
                     <tr>

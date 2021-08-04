@@ -22,9 +22,16 @@
               <div class="card-header">
                 <h3 class="card-title">Bordered Table </h3>
                 @if (session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible fade show">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
                         {{ session('success') }}
                     </div>
+                @endif
+                @if (session('error'))
+                  <div class="alert alert-warning alert-dismissible fade show">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ session('error') }}
+                  </div>
                 @endif
               </div>
               <!-- /.card-header -->

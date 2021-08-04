@@ -35,8 +35,15 @@ class CategoryController extends Controller
     
 
     function deletecategory($data){
-        Category::findOrFail($data)->delete();
-        return back()->with('success','Category Trashed Successfully');
+        $cat = Category::findOrFail($data);
+        if($cat->subcategory->count() == 0){
+            Category::findOrFail($data)->delete();
+            return back()->with('success','Category Trashed Successfully');
+        }
+        else{
+            return back()->with('error','Category has Sub Category');
+        }
+        
     }
     
     function editcategory($data){

@@ -82,12 +82,27 @@
                                             <div class=''>{{ $message }}<span class="text-danger">*</span></div>
                                         @enderror
                                     </div>
-
+                                    <div class="form-group">.
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="thumbnail">Thumbnail</label>
+                                                <input type="file" class="form-control @error('thumbnail') is invalid @enderror"
+                                                    id="thumbnail" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])" value="{{ old('thumbnail') }}" name="thumbnail">
+                                                @error('thumbnail')
+                                                    <div class=''>{{ $message }}<span class="text-danger">*</span></div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="thumbnail">Preview Thumbnail</label><br>
+                                                <img height="200" id="preview">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
-                                        <label for="thumbnail">Thumbnail</label>
-                                        <input type="file" class="form-control @error('thumbnail') is invalid @enderror"
-                                            id="thumbnail" value="{{ old('thumbnail') }}" name="thumbnail">
-                                        @error('thumbnail')
+                                        <label for="image_name">Gallery <sub>(can choose multiple image)</sub></label>
+                                        <input type="file" class="form-control @error('image_name') is invalid @enderror"
+                                            id="image_name" multiple value="{{ old('image_name') }}" name="image_name[]">
+                                        @error('image_name')
                                             <div class=''>{{ $message }}<span class="text-danger">*</span></div>
                                         @enderror
                                     </div>
@@ -133,7 +148,8 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="price">Regular Price</label>
-                                                    <input type="number" min="0" id="price" name="regular_price[]" class="form-control"/>
+                                                    <input type="number" min="0" id="price" name="regular_price[]"
+                                                        class="form-control" />
                                                     @error('regular_price')
                                                         <div class=''>{{ $message }}<span class="text-danger">*</span>
                                                         </div>
@@ -141,7 +157,8 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="saleprice">Sale Price</label>
-                                                    <input type="number" min="0" id="saleprice" class="form-control" name="sale_price[]" />
+                                                    <input type="number" min="0" id="saleprice" class="form-control"
+                                                        name="sale_price[]" />
                                                     @error('sale_price')
                                                         <div class=''>{{ $message }}<span class="text-danger">*</span>
                                                         </div>

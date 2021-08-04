@@ -40,7 +40,6 @@
                       <th><input type="checkbox" id="checkAll"></th>
                       <th style="width: 10px">No</th>
                       <th>title</th>
-                      <th>Slug</th>
                       <th>Category</th>
                       <th>Subcategory</th>
                       <th>attribute</th>
@@ -57,10 +56,29 @@
                               <td><input type="checkbox" class="checkbox" name="delete[]" value="{{$pdt->id}}"></td>
                               <td>{{$products->firstItem() + $key}}</td>
                               <td>{{ $pdt->title}}</td>
-                              <td>{{ $pdt->slug}}</td>
                               <td>{{ $pdt->category->category_name}}</td>
                               <td>{{ $pdt->subcategory->subcategory_name}}</td>
-                              <td>{{ $pdt->attribute}}</td>
+                              <td>
+                                  <table class="table">
+                                    <tr>
+                                      <th>color</th>
+                                      <th>size</th>
+                                      <th>quan</th>
+                                      <th>price</th>
+                                      <th>sale</th>
+                                    </tr>
+                                      @foreach ($pdt->attribute as $attribute)
+                                        <tr>
+                                          <td style="color:{{$attribute->color->slug}};">
+                                            {{$attribute->color->color_name}}</td>
+                                          <td>{{$attribute->size->size_name}}</td>
+                                          <td>{{$attribute->quantity}}</td>
+                                          <td>{{$attribute->regular_price}}</td>
+                                          <td>{{$attribute->sale_price}}</td>
+                                        </tr>
+                                      @endforeach
+                                  </table>
+                              </td>
                               <td><img src="productImage/{{ $pdt->thumbnail}}" alt="{{ $pdt->title}}" height="100"></td>
                               <td>{{ $pdt->summary}}</td>
                               <td>{{ $pdt->description}}</td>

@@ -6,6 +6,7 @@ use App\Models\SubCategory;
 use App\Models\Category;
 use App\Models\Size;
 use App\Models\Color;
+use App\Models\Gallery;
 use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Support\Str;
@@ -77,6 +78,18 @@ class ProductController extends Controller
         }
         $product->save();
 
+        if($request->hasFile('image_name')){
+            $image = $request->file('image_name');
+            foreach($image as $key=>$value){
+                $gallery = new Gallery;
+                $extg = Str::random(5).'-'.$slug.'.'.$value->getClientOriginalExtension();
+                Image::make($value)->save(public_path('gallery/'.$extg), 72);
+                $gallery->image_name = $extg;
+                $gallery->product_id = $product->id;
+                $gallery->save();
+            }   
+        }
+
         foreach ($request->color_id as $key => $color){
             $attr = new Attribute;
             $attr->product_id = $product->id;
@@ -85,7 +98,7 @@ class ProductController extends Controller
             $attr->quantity = $request->quantity[$key];
             $attr->regular_price = $request->regular_price[$key];
             $attr->sale_price = $request->sale_price[$key];
-            $attr->save();
+            $attr->save(); 
         }
         return back()->with('success','Data Successfully Inserted.');
     }

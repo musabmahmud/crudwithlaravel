@@ -16,6 +16,9 @@ class Product extends Model
         return $this->belongsTo(SubCategory::class);
     }
     function attribute(){
-        return $this->belongsTo(Attribute::class,'product_id');
+        return $this->hasMany(Attribute::class,'product_id');
+    }
+    function gallery(){
+        return $this->hasMany(Gallery::class,'product_id');
     }
 }

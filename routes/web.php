@@ -1,10 +1,13 @@
 <?php
+
+use App\Http\Controllers\BackendController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProductController;
 use App\HTTP\Controllers\ColorController;
+use App\HTTP\Controllers\FrontendController;
 use App\HTTP\Controllers\SizeController;
 // use App\Models\SubCategory;
 
@@ -18,12 +21,25 @@ use App\HTTP\Controllers\SizeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('', function () {
-    return view('backend.dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('',[FrontendController::class,'frontend'])->name('frontend');
+Route::get('/product-details/{slug}',[FrontendController::class,'productDetails'])->name('productDetails');
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('dashboard',[BackendController::class,'backend'])->middleware(['auth'])->name('backend');
 Route::get('category',[CategoryController::class,'category'])->name('category');
 Route::get('add-category',[CategoryController::class,'addcategory'])->name('addcategory');
 Route::post('post-category',[CategoryController::class,'postcategory'])->name('postcategory');
@@ -40,7 +56,7 @@ Route::get('add-subcategory',[SubCategoryController::class,'addsubcategory'])->n
 Route::post('post-subcategory',[SubCategoryController::class,'postsubcategory'])->name('postsubcategory');
 Route::post('all-subcategory-delete',[SubCategoryController::class,'allsubcategorydelete'])->name('allsubcategorydelete');
 Route::get('trashed-subcategory',[SubCategoryController::class,'trashedsubcategory'])->name('trashedsubcategory');
-
+Route::get('delete-subcategory/{id}',[SubCategoryController::class,'deletesubcategory'])->name('deletesubcategory');
 
 // Product
 Route::get('products',[ProductController::class,'products'])->name('products');
@@ -63,5 +79,19 @@ Route::post('post-color',[ColorController::class,'postcolor'])->name('postcolor'
 Route::get('add-size',[SizeController::class,'addsize'])->name('addsize');
 Route::get('view-size',[SizeController::class,'viewsize'])->name('viewsize');
 Route::post('post-size',[SizeController::class,'postsize'])->name('postsize');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 require __DIR__.'/auth.php';
