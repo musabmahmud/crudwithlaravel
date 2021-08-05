@@ -254,7 +254,7 @@
             var className = ".dynamic-field";
             var count = 0;
             var field = "";
-            var maxFields = 5;
+            var maxFields = 50;
 
             function totalFields() {
                 return $(className).length;

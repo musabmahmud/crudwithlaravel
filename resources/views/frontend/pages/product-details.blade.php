@@ -41,13 +41,14 @@
                     <div class="product-single-content">
                         <h3>{{ $product->title }}</h3>
                         <div class="rating-wrap fix">
-                            <span class="pull-left">
-                                @if (collect($product->attribute)->min('sale_price'))
-                                    ${{ collect($product->attribute)->min('sale_price') }}
-                                @else
-                                    ${{ collect($product->attribute)->min('regular_price') }}
-                                @endif
-                            </span>
+                            <span class="pull-left priceofsize">
+                                        @if (collect($product->attribute)->min('sale_price'))
+                                                ${{ collect($product->attribute)->min('sale_price') }}
+                                            @else
+                                                ${{ collect($product->attribute)->min('regular_price') }}
+                                            @endif
+                                        </span>
+                                        <span class="quantityofsize"></span>
                             <ul class="rating pull-right">
                                 <li><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
@@ -64,24 +65,29 @@
                             </li>
                             <li><a href="cart.html">Add to Cart</a></li>
                         </ul>
-                        <ul class="cetagory">
-                            <li>Categories:</li>
-                            <li><a href="#">{{ $product->category->category_name }}</a></li>
-                        </ul>
-                        <ul class="cetagory">
-                            <li>Sub Categories:</li>
-                            <li><a href="#">{{ $product->subcategory->subcategory_name }}</a>
-                            </li>
-                        </ul>
-                        <ul class="cetagory">
-                            <li>Color:</li>
-                            <li>
-                                @foreach ($groups as $group)
-                                    <input type="radio" value="{{$group[0]->color_id}}" id="cid{{$group[0]->id}}" name="color_id" class="color_id">
-                                    <label for="cid{{$group[0]->id}}">{{ $group[0]->color->color_name }}</label>
-                                @endforeach
-                            </li>
-                        </ul>
+                        <table class="cetagory">
+                            <tr>
+                                <th>Categories:</th>
+                                <td><a href="#">{{ $product->category->category_name }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Sub Categories:</th>
+                                <td><a href="#">{{ $product->subcategory->subcategory_name }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Color:</th>
+                                <td>
+                                    @foreach ($groups as $group)
+                                        <input type="radio" value="{{$group[0]->color_id}}" data-product="{{$product->id}}" id="cid{{$group[0]->id}}" name="color_id" class="color_id">
+                                        <label for="cid{{$group[0]->id}}">{{ $group[0]->color->color_name }}</label> 
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Size:</th>
+                                <td><span class="sizeadd"></span></td>
+                            </tr>
+                        </table>
                         <ul class="socil-icon">
                             <li>Share :</li>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -441,8 +447,29 @@
 <script>
     $('.color_id').change(function() {
         var colorId = $(this).val();
-        alert(colorId);
+        var productId = $(this).attr('data-product');
+
+        $.ajax({
+            type: "GET",
+            url: "{{url('get/color/size')}}/"+colorId+'/'+productId,
+            success:function(res){
+                if(res){
+                    $('.sizeadd').empty();
+                    $('.sizeadd').html(res);
+                    $('.sizecheck').change(function(){
+                        var price = $(this).attr('data-price');
+                        var quantity = $(this).attr('data-quantity');
+                        $('.priceofsize').html('$'+price);
+                        $('.quantityofsize').html(' ('+quantity+' available)');
+                    })
+                }
+                else{
+
+                }
+            }
+        })
     })
 </script>
 
 @endsection
+                                

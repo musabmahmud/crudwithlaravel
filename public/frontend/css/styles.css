@@ -3307,7 +3307,9 @@ ol {
 .input-style li a:hover {
     background: #333;
 }
-
+.cetagory td,.pull-left td{
+    text-align: right;
+}
 .cetagory {
     margin-bottom: 25px;
 }

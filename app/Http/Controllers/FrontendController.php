@@ -23,4 +23,13 @@ class FrontendController extends Controller
             'groups' => $collection,
         ]);
     }
+    function getSize($c_id,$p_id){
+        $output = '';
+        $sizes = Attribute::with(['product','color','size'])->where('product_id',$p_id)->where('color_id',$c_id)->get();
+        foreach($sizes as $key => $size){
+            $output = $output.'<input type="radio" data-quantity="'.$size->quantity.'" value="'.$size->id.'" data-price="'.$size->regular_price.'" name="size_id" id="size" class="sizecheck">
+            <label for="size">'.$size->size->size_name.'</label> ';
+        }
+        return response()->json($output);
+    }
 }
