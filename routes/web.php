@@ -70,6 +70,10 @@ Route::get('trashed-products',[ProductController::class,'trashedproducts'])->nam
 Route::get('recover-product/{pdt}',[ProductController::class,'recoverproducts'])->name('recoverproducts');
 Route::get('edit-products/{pdt}',[ProductController::class,'editproducts'])->name('editproducts');
 Route::post('all-products-delete',[ProductController::class,'allproductsdelete'])->name('allproductsdelete');
+Route::get('view-gallery/{pdt}',[ProductController::class,'galleryView'])->name('galleryView');
+Route::get('delete-galleryimage/{pdt}',[ProductController::class,'deletegalleryimage'])->name('deletegalleryimage');
+Route::get('update-galleryImages/{pdt}',[ProductController::class,'updategalleryImages'])->name('updategalleryImages');
+Route::post('post-updategallery',[ProductController::class,'updategallery'])->name('updategallery');
 
 //color
 Route::get('add-color',[ColorController::class,'addcolor'])->name('addcolor');
@@ -80,8 +84,6 @@ Route::post('post-color',[ColorController::class,'postcolor'])->name('postcolor'
 Route::get('add-size',[SizeController::class,'addsize'])->name('addsize');
 Route::get('view-size',[SizeController::class,'viewsize'])->name('viewsize');
 Route::post('post-size',[SizeController::class,'postsize'])->name('postsize');
-
-
 
 
 

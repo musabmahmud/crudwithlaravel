@@ -47,6 +47,7 @@
                       <th>Summary</th>
                       <th>Description</th>
                       <th>Created Date</th>
+                      <th>Gallery Images</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -83,8 +84,12 @@
                               <td>{{ $pdt->summary}}</td>
                               <td>{{ $pdt->description}}</td>
                               <td>{{ $pdt->created_at->format('d-M-Y h:i:s a')}} ({{$pdt->created_at->diffForHumans()}})</td>
+                              <td>
+                                <a href="{{ route('galleryView',$pdt->id) }}" class="btn btn-danger">View Gallery</a>
+                              </td>
                               <td><a href="{{ url('edit-products').'/'.$pdt->id }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ url('delete-products').'/'.$pdt->id }}" class="btn btn-danger">Trashed</a></td>
+                                <a href="{{ url('delete-products').'/'.$pdt->id }}" class="btn btn-danger">Trashed</a>
+                              </td>
                           </tr>
                       @endforeach
                     <tr>

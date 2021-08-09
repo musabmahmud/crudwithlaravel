@@ -148,8 +148,75 @@ class ProductController extends Controller
             'sizes' => Size::orderBy('size_name', 'Asc')->get(),
         ]);
     }
+    function galleryView($id)
+    {
+        return view('backend.product.view_gallery', [
+            'galleries' => Gallery::Where('product_id', $id)->latest()->paginate(20),
+            'productId' => $id,
+        ]);
+    }
+    function deletegalleryimage($id)
+    {
+        Gallery::findOrFail($id)->delete();
+        return back()->with('success', 'Gallery Image Trashed Successfully');
+    }
+    function updategalleryImages($id)
+    {
+        return view('backend.product.update_galleryImages', [
+            'galleries' => Gallery::Where('product_id', $id)->get(),
+            'productId' => $id,
+        ]);
+    }
+    function updategallery(Request $request)
+    {
+        $product = Product::findOrFail($request->product_id);
+        // $image = $request->file('image_name');
+        foreach ($request->file('image_name') as $key => $value) {
+            if (Gallery::where('id',$request->image_id[$key] ?? '')->exists()) {
+                $gallery = Gallery::findOrFail($request->image_id[$key]);
+                $ext = Str::random(5) . '-' . $value->getClientOriginalExtension();
+                Image::make($value)->save(public_path('gallery/' . $ext), 72);
+                $gallery->image_name = $ext;
+                $gallery->save();
+            } else {
+                $gallery = new Gallery;
+                $ext = Str::random(5) . '-' . $value->getClientOriginalExtension();
+                Image::make($value)->save(public_path('gallery/' . $ext), 72);
+                $gallery->image_name = $ext;
+                $gallery->product_id = $request->product_id;
+                $gallery->save();
+            }
+        }
+
+        return redirect('view-gallery/'.$product->id);
+    }
     function productupdate(Request $request)
     {
+        $request->validate([
+            'title' => ['required', 'min:3'],
+            'slug' => ['required', 'unique:products'],
+            'category_id' => ['required'],
+            'subcategory_id' => ['required'],
+            'thumbnail' => ['required'],
+
+            'color_id' => ['required'],
+            'color_id.*' => ['required'],
+
+            'size_id' => ['required'],
+            'size_id.*' => ['required'],
+
+            'quantity' => ['required'],
+            'quantity.*' => ['required'],
+
+            'regular_price' => ['required'],
+            'regular_price.*' => ['required'],
+
+            'sale_price' => ['required'],
+            'sale_price.*' => ['required'],
+
+            'summary' => ['required'],
+            'description' => ['required'],
+        ]);
 
         $product = Product::findOrFail($request->product_id);
         $product->title = $request->title;
