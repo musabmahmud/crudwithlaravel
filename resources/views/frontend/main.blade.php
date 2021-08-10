@@ -1,4 +1,7 @@
 @extends('frontend.master')
+@section('main')
+active
+@endsection
 @section('content')
     <!-- slider-area start -->
     <div class="slider-area">

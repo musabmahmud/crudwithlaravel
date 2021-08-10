@@ -12,7 +12,7 @@
     <!-- bootstrap v4.0.0-beta.2 css -->
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css')}}">
     <!-- owl.carousel.2.0.0-beta.2.4 css -->
-    <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.min.')}}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.min.css')}}">
     <!-- font-awesome v4.6.3 css -->
     <link rel="stylesheet" href="{{ asset('frontend/css/font-awesome.min.css')}}">
     <!-- flaticon.css -->
@@ -71,7 +71,7 @@
                                 <ul class="dropdown_style">
                                     <li><a href="login.html">Login</a></li>
                                     <li><a href="register.html">Register</a></li>
-                                    <li><a href="cart.html">Cart</a></li>
+                                    <li><a href="{{url('cart')}}">Cart</a></li>
                                     <li><a href="checkout.html">Checkout</a></li>
                                     <li><a href="wishlist.html">wishlist</a></li>
                                 </ul>
@@ -105,30 +105,19 @@
                                     <a href="javascript:void(0);">Shop <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown_style">
                                         <li><a href="shop.html">Shop Page</a></li>
-                                        <li><a href="single-product.html">Product Details</a></li>
                                         <li><a href="cart.html">Shopping cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                         <li><a href="wishlist.html">Wishlist</a></li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="javascript:void(0);">Pages <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown_style">
-                                        <li><a href="about.html">About Page</a></li>
-                                        <li><a href="single-product.html">Product Details</a></li>
-                                        <li><a href="cart.html">Shopping cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                    </ul>
-                                </li>
-                                <li>
                                     <a href="javascript:void(0);">Blog <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown_style">
                                         <li><a href="blog.html">blog Page</a></li>
                                         <li><a href="blog-details.html">blog Details</a></li>
                                     </ul>
                                 </li>
+                                
+                                <li><a href="{{url('cart')}}">Shopping cart</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>

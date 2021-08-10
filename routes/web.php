@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\HTTP\Controllers\ColorController;
 use App\HTTP\Controllers\FrontendController;
 use App\HTTP\Controllers\SizeController;
+use App\HTTP\Controllers\CartController;
 // use App\Models\SubCategory;
 
 /*
@@ -24,9 +25,8 @@ use App\HTTP\Controllers\SizeController;
 Route::get('',[FrontendController::class,'frontend'])->name('frontend');
 Route::get('/product/{slug}',[FrontendController::class,'productDetails'])->name('productDetails');
 Route::get('/get/color/size/{c_id}/{p_id}',[FrontendController::class,'getSize'])->name('getSize');
-
-
-
+Route::get('/cart',[CartController::class,'CartPage'])->name('CartPage');
+Route::post('/cart-products',[CartController::class,'CartDetails'])->name('CartDetails');
 
 
 
