@@ -27,7 +27,8 @@ Route::get('/product/{slug}',[FrontendController::class,'productDetails'])->name
 Route::get('/get/color/size/{c_id}/{p_id}',[FrontendController::class,'getSize'])->name('getSize');
 Route::get('/cart',[CartController::class,'CartPage'])->name('CartPage');
 Route::post('/cart-products',[CartController::class,'CartDetails'])->name('CartDetails');
-
+Route::get('/cart-remove/{id}',[CartController::class,'cartremove'])->name('cartremove');
+Route::post('/cart-update',[CartController::class,'cartupdate'])->name('cartupdate');
 
 
 

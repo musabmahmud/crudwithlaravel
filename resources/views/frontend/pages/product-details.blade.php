@@ -98,6 +98,17 @@
                                 </li>
                                 <li><button type="submit" class="btn btn-danger">Add to Cart</button></li>
                             </ul>
+                            @if (session('error'))
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    {{ session('error') }}
+                                </div>
+                            @elseif(session('success'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                {{ session('success') }}
+                            </div>
+                            @endif
                             <table class="cetagory">
                                 <tr>
                                     <th>Categories:</th>

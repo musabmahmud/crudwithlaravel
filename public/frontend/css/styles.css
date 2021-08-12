@@ -567,11 +567,16 @@ header-area start
 
 .cart-img {
     float: left;
-    margin-right: 15px;
+    margin-right: 5%;
+    width: 45%;
+}
+.cart-img img{
+    max-width: 100%!important;
 }
 
 .cart-wrap li .cart-content {
     overflow: hidden;
+    width: 50%;
 }
 
 .cart-wrap li .cart-content a {

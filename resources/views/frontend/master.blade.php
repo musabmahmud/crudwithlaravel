@@ -126,30 +126,11 @@
                         <ul class="search-cart-wrapper d-flex">
                             <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>2</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-like"></i>
+                                    <span>
+                                    </span></a>
                                 <ul class="cart-wrap dropdown_style">
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{asset('frontend/images/cart/1.jpg')}}" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{asset('frontend/images/cart/3.jpg')}}" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
+                                    
                                     <li>Subtotol: <span class="pull-right">$70.00</span></li>
                                     <li>
                                         <button>Check Out</button>
@@ -157,44 +138,33 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>3</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>{{cart_amount()}}</span></a>
                                 <ul class="cart-wrap dropdown_style">
+                                    @php
+                                        $total = 0;
+                                    @endphp
+                                    @forelse (cart_product() as $cart_product)
                                     <li class="cart-items">
                                         <div class="cart-img">
-                                            <img src="{{asset('frontend/images/cart/1.jpg')}}" alt="">
+                                            <img src="{{ asset('productImage/' . $cart_product->product->thumbnail) }}" alt="{{$cart_product->product->title}}">
                                         </div>
                                         <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
+                                            <a href="{{ url('product/'.$cart_product->product->slug)}}">{{$cart_product->product->title}}</a>
+                                            <span>Color : {{$cart_product->color->color_name}} - {{$cart_product->size->size_name}}</span>
+                                            <span>QTY : {{$cart_product->quantity}}</span>
+                                            <p>Price : ${{cart_price($cart_product)}}</p>
                                             <i class="fa fa-times"></i>
                                         </div>
                                     </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{asset('frontend/images/cart/3.jpg')}}" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="{{asset('frontend/images/cart/2.jpg')}}" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                    @php
+                                        $total = cart_price($cart_product) + $total;
+                                    @endphp
+                                    @empty
+                                    <li class="cart-items">No Data Available</li>
+                                    @endforelse
+                                    <li>Subtotol: <span class="pull-right">${{$total}}</span></li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <a class="btn btn-danger" href="{{url('/cart')}}">Check Out</a>
                                     </li>
                                 </ul>
                             </li>

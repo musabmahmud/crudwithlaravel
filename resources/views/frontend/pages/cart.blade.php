@@ -22,7 +22,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form action="">
+                    @if(session('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ session('success') }}
+                    </div>
+                    @endif
+                    <form action="{{route('cartupdate')}}" method="POST">
+                        @csrf
                         <table class="table-responsive cart-wrap">
                             <thead>
                                 <tr>
@@ -37,7 +44,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($carts as $cart)
+                                @php
+                                    $total = 0
+                                @endphp
+                                @forelse ($carts as $cart)
+                                <input type="hidden" name="cart_id[]" value="{{$cart->id}}">
                                 <tr>
                                     <td class="images"><img src="{{ asset('productImage/' . $cart->product->thumbnail) }}" alt="{{ $cart->product->title }}"></td>
                                     <td class="product"><a href="{{ url('product/'.$cart->product->slug)}}">{{ $cart->product->title }}</a></td>
@@ -45,18 +56,22 @@
                                     <td>{{ $cart->size->size_name}}</td>
                                     <td class="ptice">
                                         @php
-                                            $price = App\Models\Attribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->sale_price;
+                                            $price = cart_price($cart);
+                                            $total = $price + $total;
                                         @endphp
                                         ${{ $price }}
                                     </td>
                                     <td class="quantity cart-plus-minus">
-                                        <input type="text" value="{{ $cart->quantity}}" />
+                                        <input type="text" name="quantity[]" value="{{ $cart->quantity}}" />
                                     </td>
                                     <td class="total">${{ $cart->quantity * $price}}</td>
-                                    <td class="remove"><i class="fa fa-times"></i></td>
+                                    <td class="remove"><a href="{{route('cartremove',$cart->id)}}"><i class="fa fa-times"></i></a></td>
                                 </tr>
-                                    
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="50"><span class="alert">No Product Added to Cart</span></td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                         <div class="row mt-60">
@@ -64,7 +79,7 @@
                                 <div class="cartcupon-wrap">
                                     <ul class="d-flex">
                                         <li>
-                                            <button>Update Cart</button>
+                                            <button type="submit">Update Cart</button>
                                         </li>
                                         <li><a href="shop.html">Continue Shopping</a></li>
                                     </ul>
@@ -80,7 +95,7 @@
                                 <div class="cart-total text-right">
                                     <h3>Cart Totals</h3>
                                     <ul>
-                                        <li><span class="pull-left">Subtotal </span>$380.00</li>
+                                        <li><span class="pull-left">Subtotal </span>${{ $total }}</li>
                                         <li><span class="pull-left"> Total </span> $380.00</li>
                                     </ul>
                                     <a href="checkout.html">Proceed to Checkout</a>
