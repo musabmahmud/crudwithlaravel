@@ -10,6 +10,7 @@ use App\HTTP\Controllers\ColorController;
 use App\HTTP\Controllers\FrontendController;
 use App\HTTP\Controllers\SizeController;
 use App\HTTP\Controllers\CartController;
+use App\HTTP\Controllers\CouponController;
 // use App\Models\SubCategory;
 
 /*
@@ -87,8 +88,7 @@ Route::get('view-size',[SizeController::class,'viewsize'])->name('viewsize');
 Route::post('post-size',[SizeController::class,'postsize'])->name('postsize');
 
 
-
-
+Route::resource('coupon', CouponController::class);
 
 
 
