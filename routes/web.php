@@ -88,6 +88,9 @@ Route::get('view-size',[SizeController::class,'viewsize'])->name('viewsize');
 Route::post('post-size',[SizeController::class,'postsize'])->name('postsize');
 
 
+Route::get('coupon/trashed',[CouponController::class,'trashed'])->name('coupon.trashed');
+Route::get('coupon/restore/{id}',[CouponController::class,'restore'])->name('coupon.restore');
+Route::get('coupon/permanentdelete/{id}',[CouponController::class,'permanentdelete'])->name('coupon.permanentdelete');
 Route::resource('coupon', CouponController::class);
 
 

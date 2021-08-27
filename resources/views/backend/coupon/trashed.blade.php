@@ -51,13 +51,10 @@
                               <td>{{ $coupon->coupon_validity}}</td>
                               <td>{{ $coupon->coupon_limit}}</td>
                               <td>{{ $coupon->created_at->format('d-M-Y h:i:s a')}} ({{$coupon->created_at->diffForHumans()}})</td>
-                              <td><a href="{{ route('coupon.edit',$coupon->id)}}" class="btn btn-primary">Edit</a>
-                                <form action="{{route('coupon.destroy',$coupon->id)}}" method="POST">
-                                  @method('DELETE')
-                                  @csrf
-                                  <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                              </td>
+                              <td>
+                                <a href="{{ route('coupon.restore',$coupon->id)}}" class="btn btn-primary">Restore</a>
+                                <a href="{{ route('coupon.permanentdelete',$coupon->id)}}" class="btn btn-danger">Delete</a>  
+                            </td>
                           </tr>
                       @endforeach
                     <tr>

@@ -77,7 +77,7 @@ class CouponController extends Controller
      */
     public function edit(Coupon $coupon)
     {
-        //
+        return view('backend.coupon.edit',compact('coupon'));
     }
 
     /**
@@ -89,7 +89,22 @@ class CouponController extends Controller
      */
     public function update(Request $request, Coupon $coupon)
     {
-        //
+        $request->validate([
+        'coupon_name' => ['unique:coupons,coupon_name,'.$coupon->id],
+        'coupon_amount' => ['required'],
+        'coupon_validity' => ['required'],
+        'coupon_limit' => ['required'],
+        ]);
+
+        $coupon->coupon_name = $request->coupon_name;
+        $coupon->slug = $request->slug;
+        $coupon->coupon_amount = $request->coupon_amount;
+        $coupon->coupon_validity = $request->coupon_validity;
+        $coupon->coupon_limit = $request->coupon_limit;
+
+        $coupon->save();
+
+        return back()->with('success','Coupon Updated successfully');
     }
 
     /**
@@ -100,6 +115,24 @@ class CouponController extends Controller
      */
     public function destroy(Coupon $coupon)
     {
-        //
+        $coupon->delete();
+        return back()->with('success','Coupon Deleted successfully');
+    }
+
+    public function trashed()
+    {
+        $coupons = Coupon::onlyTrashed()->paginate(10);
+        return view('backend.coupon.trashed',compact('coupons'));
+    }
+
+    public function restore($id)
+    {
+        Coupon::onlyTrashed()->findOrFail($id)->restore();
+        return back()->with('success','Coupon Restored Successfully');
+    }
+    public function permanentdelete($id)
+    {
+        Coupon::onlyTrashed()->findOrFail($id)->forceDelete();
+        return back()->with('success','Coupon Permanently Deleted Successfully');
     }
 }

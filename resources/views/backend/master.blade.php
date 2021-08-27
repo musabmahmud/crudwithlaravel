@@ -385,7 +385,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url('trashed-color')}}" class="nav-link">
+                <a href="{{ route('coupon.trashed')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Trashed  Coupon</p>
                 </a>
