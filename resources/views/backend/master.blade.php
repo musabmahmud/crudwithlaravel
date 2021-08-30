@@ -392,6 +392,35 @@
               </li>
             </ul>
           </li> 
+          <li class="nav-item @yield('')">
+            <a href="#" class="nav-link @yield('')">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+               Role
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('role.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Role</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('coupon.index')}}" class="nav-link @yield('')">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Coupon</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('coupon.trashed')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Trashed  Coupon</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
            
           <li class="nav-item">
             <a href="" class="nav-link" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">

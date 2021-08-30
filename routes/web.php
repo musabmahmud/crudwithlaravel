@@ -11,6 +11,7 @@ use App\HTTP\Controllers\FrontendController;
 use App\HTTP\Controllers\SizeController;
 use App\HTTP\Controllers\CartController;
 use App\HTTP\Controllers\CouponController;
+use App\HTTP\Controllers\RoleController;
 // use App\Models\SubCategory;
 
 /*
@@ -33,7 +34,7 @@ Route::post('/cart-update',[CartController::class,'cartupdate'])->name('cartupda
 
 Route::get('/cart/coupon/{coupon_name}',[CartController::class,'getCoupon'])->name('getCoupon');
 
-
+Route::resource('role', RoleController::class);
 // Route::get('api/get-coupon-name/{coupon_name}',[CartController::class,'getCoupon'])->name('getCoupon');
 
 
