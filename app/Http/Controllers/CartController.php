@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 use App\Models\Cart;
 use App\Models\Attribute;
+use App\Models\Coupon;
 
 class CartController extends Controller
 {
@@ -55,6 +56,20 @@ class CartController extends Controller
                 $cart->save();
             }
         }
-        return back();
+        return redirect('cart/#coupon')->with('success','Cart Successfully Updated');
+    }
+
+    
+    function getCoupon($coupon_name){
+        $coupon = Coupon::Where('coupon_name', $coupon_name)->first();
+        if($coupon){
+            $cookie = Cookie::get('generate_id');
+            $carts =  Cart::Where('cookie_id', $cookie)->get();
+        }
+        else{
+            return redirect('cart/#coupon')->with('error','Please Enter A Valid Coupon');
+        }
+        
+        return view('frontend.pages.cart', compact('carts','coupon'));
     }
 }

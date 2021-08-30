@@ -9,16 +9,15 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    
-
     function category(){
         $cats = Category::OrderBy('category_name', 'Asc')->paginate(10);
         return view('backend.category.category_view',compact('cats'));
     }
+
     function addcategory(){
         return view('backend.category.category_add');
     }
-
+    
     function postcategory(Request $request){
         $request->validate([
             'category_name' => ['required','min:3','max:10','unique:categories'],

@@ -12,4 +12,9 @@
         $carts_products =  App\Models\Cart::Where('cookie_id',$cookie)->get();
         return $carts_products;
     }
+    // function cart_total_price(){
+    //     $cookie = Illuminate\Support\Facades\Cookie::get('generate_id');
+    //     $carts_amount = App\Models\Cart::Where('cookie_id',$cookie)->sum();
+    //     return $carts_amount;
+    // }
 ?>

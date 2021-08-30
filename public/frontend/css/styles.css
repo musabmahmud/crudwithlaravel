@@ -2755,7 +2755,7 @@ shop single style here
     font-size: 24px;
 }
 
-.cart-total a {
+.cart-total a.checkout {
     display: inline-block;
     padding: 10px 30px;
     background: #ef4836;
@@ -2765,7 +2765,13 @@ shop single style here
     margin-top: 20px;
 }
 
-.cart-total a:hover {
+.cart-total a.discount{
+    color: #ef4836;
+}
+.cart-total a.discount:hover{
+    color: #333;
+}
+.cart-total a.checkout:hover {
     background: #333;
 }
 

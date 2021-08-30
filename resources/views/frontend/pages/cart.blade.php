@@ -20,16 +20,20 @@
     <!-- cart-area start -->
     <div class="cart-area ptb-100">
         <div class="container">
-            <div class="row">
+            <div class="row" id="coupon">
                 <div class="col-12">
                     @if(session('success'))
-                    <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        {{ session('success') }}
-                    </div>
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ session('success') }}
+                        </div>
                     @endif
-                    <form action="{{route('cartupdate')}}" method="POST">
-                        @csrf
+                    @if(session('error'))
+                        <div class="alert alert-warning alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ session('error') }}
+                        </div>
+                    @endif
                         <table class="table-responsive cart-wrap">
                             <thead>
                                 <tr>
@@ -45,8 +49,11 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $total = 0
+                                    $subtotal = 0
                                 @endphp
+                                
+                            <form action="{{route('cartupdate')}}" method="POST">
+                                @csrf
                                 @forelse ($carts as $cart)
                                 <input type="hidden" name="cart_id[]" value="{{$cart->id}}">
                                 <tr>
@@ -56,8 +63,8 @@
                                     <td>{{ $cart->size->size_name}}</td>
                                     <td class="ptice">
                                         @php
-                                            $price = cart_price($cart);
-                                            $total = $price + $total;
+                                            $price = cart_price($cart) * $cart->quantity;
+                                            $subtotal = $price + $subtotal;
                                         @endphp
                                         ${{ $price }}
                                     </td>
@@ -81,13 +88,17 @@
                                         <li>
                                             <button type="submit">Update Cart</button>
                                         </li>
+                            </form>
                                         <li><a href="shop.html">Continue Shopping</a></li>
                                     </ul>
                                     <h3>Cupon</h3>
                                     <p>Enter Your Cupon Code if You Have One</p>
                                     <div class="cupon-wrap">
-                                        <input type="text" placeholder="Cupon Code">
-                                        <button>Apply Cupon</button>
+                                        <input id="coupon_name" @isset($coupon)
+                                                value="{{$coupon->coupon_name}}"
+                                            @endisset
+                                        type="text" placeholder="Coupon Code">
+                                        <button id="coupon_apply">Apply Coupon</button>
                                     </div>
                                 </div>
                             </div>
@@ -95,17 +106,58 @@
                                 <div class="cart-total text-right">
                                     <h3>Cart Totals</h3>
                                     <ul>
-                                        <li><span class="pull-left">Subtotal </span>${{ $total }}</li>
-                                        <li><span class="pull-left"> Total </span> $380.00</li>
+                                        @if(isset($coupon))
+                                            <li><span class="pull-left">Subtotal </span>${{ $subtotal }}</li>
+                                            <li><span class="pull-left">Coupon Name</span><a href="{{url('cart')}}" class="discount">{{$coupon->coupon_name}} &#x2715;</a></li>
+                                            <li><span class="pull-left">Discount ({{$coupon->coupon_amount}}%)</span>${{$discount = $coupon->coupon_amount * $subtotal/100}}</li>
+                                            <li><span class="pull-left"> Total </span> ${{round($total = $subtotal - $discount)}}</li>
+                                        @else
+                                            <li><span class="pull-left">Subtotal </span>${{ $subtotal }}</li>
+                                            <li><span class="pull-left"> Total </span> ${{$subtotal}}</li>
+                                        @endif
                                     </ul>
-                                    <a href="checkout.html">Proceed to Checkout</a>
+                                    <a class="checkout" href="checkout.html">Proceed to Checkout</a>
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
     <!-- cart-area end -->
+@endsection
+@section('footer_js')
+    <script>
+        $(document).ready(function(){
+            $('#coupon_apply').click(function(){
+                var coupon_name = $('#coupon_name').val();
+                var couponUrl = "{{ url('cart/coupon') }}/" + coupon_name;
+                window.location.href = couponUrl;
+            });
+        });
+
+
+    // $(document).ready(function(){
+        
+    //     $('#coupon_apply').click(function(){
+    //         var coupon_name = $('#coupon_name').val();
+    //         if(coupon_name){
+    //             $.ajax({
+    //                 type: "GET",
+    //                 url: "{{ url('api/get-coupon-name') }}/" + coupon_name,
+    //                 success: function(res) {
+    //                     if (res) {
+    //                         $("#discount_add").empty();
+    //                         $("#discount_add").append('<span> (' + value.coupon_name +
+    //                                 '%)' + value.coupon_name + '</span>');
+    //                     }
+    //                 }
+    //             })
+    //         }
+    //     });
+        
+    // });
+    </script>
+
+
 @endsection

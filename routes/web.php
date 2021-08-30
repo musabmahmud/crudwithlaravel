@@ -31,8 +31,10 @@ Route::post('/cart-products',[CartController::class,'CartDetails'])->name('CartD
 Route::get('/cart-remove/{id}',[CartController::class,'cartremove'])->name('cartremove');
 Route::post('/cart-update',[CartController::class,'cartupdate'])->name('cartupdate');
 
+Route::get('/cart/coupon/{coupon_name}',[CartController::class,'getCoupon'])->name('getCoupon');
 
 
+// Route::get('api/get-coupon-name/{coupon_name}',[CartController::class,'getCoupon'])->name('getCoupon');
 
 
 
