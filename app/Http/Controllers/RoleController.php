@@ -14,6 +14,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $roles = Role::paginate(30);
+        return view('backend.role.index', compact('roles'));
     }
 
     /**
@@ -23,7 +25,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('backend.role.create');
+        $permissions = Permission::all();
+        return view('backend.role.create',compact('permissions'));
     }
 
     /**
@@ -34,7 +37,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = Role::create(['name' => $request->role_name]);
+        $role->givePermissionTo($request->permissions);
+        return back()->with('success','Data Successfully Inserted.');
     }
 
     /**
@@ -56,7 +61,9 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $permissions = Permission::all();
+        return view('backend.role.edit',compact('role','permissions'));
     }
 
     /**
@@ -68,7 +75,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->syncPermissions($request->permissions);
+        return back()->with('success','Data Updated Successfully.');
     }
 
     /**

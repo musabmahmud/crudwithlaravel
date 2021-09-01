@@ -408,17 +408,17 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('coupon.index')}}" class="nav-link @yield('')">
+                <a href="{{ route('role.index')}}" class="nav-link @yield('')">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View Coupon</p>
+                  <p>View Role</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{ route('coupon.trashed')}}" class="nav-link">
+              {{-- <li class="nav-item">
+                <a href="{{ route('role.trashed')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Trashed  Coupon</p>
+                  <p>Trashed  Role</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li> 
            

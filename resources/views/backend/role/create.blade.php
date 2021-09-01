@@ -37,7 +37,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form action="{{route('coupon.store')}}" method="POST">
+                            <form action="{{route('role.store')}}" method="POST">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
@@ -51,10 +51,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">Role Permission:</label>
+                                        @foreach ($permissions as $permission)
                                         <div class="custom-control custom-checkbox">
-                                          <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
-                                          <label for="customCheckbox1" class="custom-control-label">Custom Checkbox</label>
+                                          <input class="custom-control-input" type="checkbox" id="customCheckbox{{$permission->id}}" value="{{$permission->id}}" name="permissions[]">
+                                            <label for="customCheckbox{{$permission->id}}" class="custom-control-label">{{$permission->name}}</label>
                                         </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">
