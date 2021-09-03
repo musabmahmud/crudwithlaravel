@@ -35,4 +35,19 @@ class {{ class }} extends Controller
     {
         
     }
+
+    public function trashed()
+    {
+        
+    }
+    
+    public function restore($id)
+    {
+        
+    }
+
+    public function permanentdelete($id)
+    {
+        
+    }
 }

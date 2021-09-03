@@ -22,6 +22,10 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <!-- Daterange picker -->
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
   <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
@@ -188,7 +192,8 @@
           <img src="{{ asset('assets/dist/img/avatar5.png')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{auth()->user()->name}} 
+            ({{auth()->user()->roles->first()->name}})</a>
         </div>
       </div>
 
@@ -421,6 +426,35 @@
               </li> --}}
             </ul>
           </li> 
+          <li class="nav-item @yield('')">
+            <a href="#" class="nav-link @yield('')">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+               User Management
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('user.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add User Role</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('user.index')}}" class="nav-link @yield('')">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View User's Role</p>
+                </a>
+              </li>
+              {{-- <li class="nav-item">
+                <a href="{{ route('user.trashed')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Trashed  Role</p>
+                </a>
+              </li> --}}
+            </ul>
+          </li> 
            
           <li class="nav-item">
             <a href="" class="nav-link" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
@@ -470,7 +504,10 @@
     $(this).addClass('active');
   });
   
-  
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+  })
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -494,9 +531,12 @@
 <script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.js')}}"></script>
+<!-- Select2 -->
+<script src="{{ asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('assets/dist/js/pages/dashboard.js')}}"></script>
+
 </body>
 </html>
